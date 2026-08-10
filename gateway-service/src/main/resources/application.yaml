@@ -15,3 +15,7 @@ llm:
       base-url: https://api.groq.com/openai/v1/chat/completions
       model: llama-3.1-8b-instant
     primary: ollama
+
+ratelimit:
+  capacity: 5
+  refill-rate-per-second: 0.0167   # ≈ 1 token per minute — deliberately low to see 429s while testing
