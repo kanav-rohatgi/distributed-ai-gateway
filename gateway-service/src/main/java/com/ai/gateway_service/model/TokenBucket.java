@@ -26,7 +26,7 @@ public class TokenBucket {
         long now = System.currentTimeMillis();
         double secondsElapsed = (now - lastRefillTimestamp) / 1000.0;
         double tokensToAdd = secondsElapsed * refillRatePerSecond;
-        tokens = Math.min(capacity, tokens + tokensToAdd);
+        tokens = Math.min(capacity, tokens + tokensToAdd); // prevent the overflow condition
         lastRefillTimestamp = now;
     }
 }

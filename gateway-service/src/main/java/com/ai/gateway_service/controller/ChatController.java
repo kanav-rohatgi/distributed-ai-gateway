@@ -26,9 +26,11 @@ public class ChatController {
             @RequestBody ChatRequestDTO request,
             @RequestHeader(value = "X-Client-Id", defaultValue = "anonymous") String clientId) {
 
+        // Rate limiting
         if(!rateLimiterService.allowRequest(clientId)) {
             throw new RateLimitExceededException("Rate limit exceeded for client: " + clientId);
         }
+        // handling request
         return ResponseEntity.ok(chatService.handleChat(request));
     }
 }
