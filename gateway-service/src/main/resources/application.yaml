@@ -19,3 +19,17 @@ llm:
 ratelimit:
   capacity: 5
   refill-rate-per-second: 0.0167   # ≈ 1 token per minute — deliberately low to see 429s while testing
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      ollama:
+        sliding-window-size: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 15s
+        permitted-number-of-calls-in-half-open-state: 2
+      groq:
+        sliding-window-size: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 15s
+        permitted-number-of-calls-in-half-open-state: 2

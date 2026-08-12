@@ -23,7 +23,7 @@ public class RedisConfig {
     @Bean
     public DefaultRedisScript<Long> tokenBucketScript() {
         DefaultRedisScript<Long> script = new DefaultRedisScript<>();
-        script.setLocation(new ClassPathResource("scripts/token_bucket.lua"));
+        script.setLocation(new ClassPathResource("script/token_bucket.lua"));
         script.setResultType(Long.class);
         return script;
     }

@@ -2,6 +2,7 @@ package com.ai.gateway_service.client.impl;
 
 import com.ai.gateway_service.client.LlmProviderClient;
 import com.ai.gateway_service.payloads.OllamaChatResponse;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +32,7 @@ public class GroqProviderClient implements LlmProviderClient {
     }
 
     @Override
+    @CircuitBreaker(name = "groq")
     public String sendPrompt(String prompt) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
