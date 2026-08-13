@@ -33,3 +33,10 @@ resilience4j:
         failure-rate-threshold: 50
         wait-duration-in-open-state: 15s
         permitted-number-of-calls-in-half-open-state: 2
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
