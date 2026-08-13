@@ -31,6 +31,6 @@ public class ChatController {
             throw new RateLimitExceededException("Rate limit exceeded for client: " + clientId);
         }
         // handling request
-        return ResponseEntity.ok(chatService.handleChat(request));
+        return ResponseEntity.ok(chatService.handleChat(request, clientId));
     }
 }
