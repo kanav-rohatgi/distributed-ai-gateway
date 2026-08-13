@@ -1,38 +1,15 @@
-spring:
-  application:
-    name: gateway-service
-
 server:
   port: 8081
 
-llm:
-  provider:
-    ollama:
-      base-url: http://localhost:11434/v1/chat/completions
-      model: llama3.2:1b
-    groq:
-      api-key: ${GROQ_API_KEY}
-      base-url: https://api.groq.com/openai/v1/chat/completions
-      model: llama-3.1-8b-instant
-    primary: ollama
-
-ratelimit:
-  capacity: 5
-  refill-rate-per-second: 0.0167   # ≈ 1 token per minute — deliberately low to see 429s while testing
-
-resilience4j:
-  circuitbreaker:
-    instances:
-      ollama:
-        sliding-window-size: 5
-        failure-rate-threshold: 50
-        wait-duration-in-open-state: 15s
-        permitted-number-of-calls-in-half-open-state: 2
-      groq:
-        sliding-window-size: 5
-        failure-rate-threshold: 50
-        wait-duration-in-open-state: 15s
-        permitted-number-of-calls-in-half-open-state: 2
+spring:
+  application:
+    name: gateway-service
+  config:
+    import: "configserver:http://localhost:8888"
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
 eureka:
   client:
