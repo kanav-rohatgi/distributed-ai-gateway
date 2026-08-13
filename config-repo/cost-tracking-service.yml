@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/cost_tracking
+    username: postgres
+    password: kanav007
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
