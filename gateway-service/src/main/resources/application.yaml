@@ -5,7 +5,15 @@ spring:
   application:
     name: gateway-service
   config:
-    import: "configserver:http://localhost:8888"
+    import: "configserver:http://config-server:8888"
+  cloud:
+    config:
+      retry:
+        max-attempts: 10
+        initial-interval: 3000
+        max-interval: 10000
+        multiplier: 1.5
+      fail-fast: true
   data:
     redis:
       host: localhost

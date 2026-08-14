@@ -2,7 +2,7 @@
 llm:
   provider:
     ollama:
-      base-url: http://localhost:11434/v1/chat/completions
+      base-url: http://host.docker.internal:11434/v1/chat/completions
       model: llama3.2:1b
     groq:
       api-key: ${GROQ_API_KEY}
@@ -30,10 +30,14 @@ resilience4j:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/cost_tracking
+    url: jdbc:postgresql://localhost:5432/cost_tracking
     username: postgres
     password: kanav007
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+  data:
+    redis:
+      host: redis
+      port: 6379

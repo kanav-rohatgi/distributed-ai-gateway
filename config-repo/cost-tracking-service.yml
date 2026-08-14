@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/cost_tracking
+    url: jdbc:postgresql://localhost:5432/cost_tracking
     username: postgres
     password: kanav007
   jpa:
