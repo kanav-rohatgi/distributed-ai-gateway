@@ -1,0 +1,68 @@
+{
+  "info": {
+    "name": "Distributed AI Gateway",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "1. Generate API Key",
+      "event": [{
+        "listen": "test",
+        "script": { "type": "text/javascript", "exec": [
+          "const body = pm.response.json();",
+          "if (body.apiKey) { pm.collectionVariables.set('apiKey', body.apiKey); }"
+        ]}
+      }],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"clientName\": \"postman-demo\",\n  \"rateLimitCapacity\": 5\n}" },
+        "url": { "raw": "{{baseUrl}}/admin/keys", "host": ["{{baseUrl}}"], "path": ["admin", "keys"] }
+      }
+    },
+    {
+      "name": "2. Chat - Normal Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{apiKey}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"prompt\": \"say hello in 5 words\"\n}" },
+        "url": { "raw": "{{baseUrl}}/v1/chat", "host": ["{{baseUrl}}"], "path": ["v1", "chat"] }
+      }
+    },
+    {
+      "name": "3. Chat - No API Key (401)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"prompt\": \"hi\"\n}" },
+        "url": { "raw": "{{baseUrl}}/v1/chat", "host": ["{{baseUrl}}"], "path": ["v1", "chat"] }
+      }
+    },
+    {
+      "name": "4. Chat - Repeat for Rate Limit",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{apiKey}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"prompt\": \"hi\"\n}" },
+        "url": { "raw": "{{baseUrl}}/v1/chat", "host": ["{{baseUrl}}"], "path": ["v1", "chat"] }
+      }
+    },
+    {
+      "name": "5. Usage Query",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}:8082/usage/postman-demo", "host": ["{{baseUrl}}"], "port": "8082", "path": ["usage", "postman-demo"] }
+      }
+    }
+  ]
+}
